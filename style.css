@@ -1,3 +1,7 @@
+/* START: Global Styles */
+
+/* END: Global Styles */
+
 * {
   padding: 0;
   margin: 0;
@@ -7,30 +11,234 @@
   cursor: default;
 }
 
-.flex {
-  display: flex;
+:root {
+  --primary-color: #000;
+  --secondary-color: #fff;
+  --accent-color: #f5f5f5;
+  --primary-color-lighter: hsl(0, 0%, 20%);
+  --secondary-color-darker: hsl(0, 0%, 80%);
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  overflow-x: hidden;
+  cursor: default;
+  background-color: #fff;
+  color: #000;
+}
+
+h1 {
+  /*This is for the hero section's header cuz this summarizes the purpose of the website*/
+  font-size: clamp(1.5rem, 3vw, 4rem);
+  font-weight: 650;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 2.55vw, 3.4rem);
+  font-weight: 650;
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+h4 {
+  font-size: 13px;
 }
 
 li {
   list-style-type: none;
 }
 
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+p,
+a {
+  font-size: 12px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  font-style: italic;
+}
+
 button {
-  background-color: transparent;
-  padding: 0.4rem 0.6rem;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 0.6rem 1.3rem;
   border-radius: 20px;
   cursor: pointer;
 }
+
 button:hover {
-  background: #000;
-  color: #fff;
+  background-color: var(--primary-color-lighter);
 }
+
+/* START: Utility Styles */
+
+.container {
+  max-width: 1500px;
+  padding-inline: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.transparent-bg {
+  background-color: transparent;
+}
+
+.lbg-hover:hover {
+  background-color: var(--primary-color-lighter);
+}
+
+.underlined-btn {
+  color: var(--primary-color);
+  background-color: transparent;
+}
+
+.underlined-btn:hover {
+  background-color: transparent;
+}
+
+.dynamic-un {
+  position: relative;
+  cursor: pointer;
+}
+
+.static-un {
+  /*this is the acting underline for the button*/
+  content: "";
+  position: absolute;
+  height: 3px;
+  background-color: var(--primary-color);
+  width: 100%;
+  left: 0;
+  bottom: -5px;
+}
+
+.dynamic-un::after {
+  /*this will be the one appearing on hover*/
+  content: "";
+  height: 3px;
+  bottom: -5px;
+  left: 50%;
+  position: absolute;
+  background: var(--primary-color);
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+/* BRO THIS IS HOLY GRAIL */
+
+.underlined-btn:hover .static-un {
+  opacity: 0; /* Hide the acting underline on hover */
+}
+
+.underlined-btn:hover .dynamic-un::after {
+  /*Show the underline hover effect*/
+  width: 100%;
+  left: 0;
+}
+
+.hide {
+  display: none;
+}
+
+/* .bold-p {
+  font-weight: 600;
+}
+
+.large-p {
+  font-size: clamp(14px, 1vw, 2);
+} */
+
+/* END: Utility Styles */
+
+/* START: Header Styles */
+
+header .container button {
+  background-color: transparent;
+  color: var(--primary-color);
+  padding: 0.4rem 0.6rem;
+}
+
+.dropdown-menu:hover button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+/* END: Header Styles */
+
+/* START: Hero Styles */
+
+/* END: Hero Styles */
+
+/* START: Latest Deals Styles */
+
+/* END: Latest Deals Styles */
+
+/* START: Exclusive Deals Styles */
+
+/* END: Exclusive Deals Styles */
+
+/* START: Mobile Products Styles */
+
+/* END: Mobile Products Styles */
+
+/* START: TV and Home Appliances Styles */
+
+/* END: TV and Home Appliances Styles */
+
+/* START: Recommended Products Styles */
+
+/* END: Recommended Products Styles */
+
+/* START: Story Styles */
+
+/* END: Story Styles */
+
+/* START: Search Bar Styles */
+
+/* END: Search Bar Styles */
+
+/* START: Notice Styles */
+
+/* END: Notice Styles */
+
+/* START: Footer Styles */
+
+/* END: Footer Styles */
+
+/* START: Responsiveness Styles */
+
+/* Breakpoints */
+/* 1. 535px */
+/* 2. 1280px */
+
+/* END: Responsiveness Styles */
+
+/* FEATURE: Feature Name */
 
 nav {
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem;
-  margin: 0.5rem 1rem;
 }
 
 .nav-bar {
@@ -48,20 +256,9 @@ nav {
 
 /* Dropdown menu */
 
-h3 {
-  font-size: 1rem;
-  font-weight: 500;
-}
+/* temp code */
 
-/* .dropdown-content {
-  display: grid;
-  position: absolute;
-  background-color: #ccc;
-  gap: 10px; 
-  top: 65px;
-  border: 0.5px solid #000;
-  border-radius: 0 0 20px 20px;
-} */
+/* end temp code */
 
 .left-start {
   left: 4%;
@@ -71,11 +268,21 @@ h3 {
   right: 4%;
 }
 
+.dropdown-menu {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+}
+
+.product-menu {
+  align-items: center;
+}
+
 .content {
   position: absolute;
   background-color: #ccc;
   gap: 10px;
-  top: 65px;
+  top: 42px;
   border-radius: 0 0 20px 20px;
   max-height: 0;
   overflow: hidden;
@@ -92,10 +299,6 @@ h3 {
   background-color: black; /* Border color */
 }
 
-.dropdown-menu.active .content {
+.dropdown-menu:hover .content {
   max-height: 800px;
-}
-
-.hide {
-  display: none;
 }

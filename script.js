@@ -15,19 +15,20 @@ document.addEventListener("DOMContentLoaded", function () {
     menu.style.gridTemplateColumns = `repeat(${childCount}, minmax(min-content, 1fr))`;
   });
 
+  //-----TO BE DELETED-----
   // Get all the dropdown menus
-  const ddMenus = document.querySelectorAll(".dropdown-menu");
+  // const ddMenus = document.querySelectorAll(".dropdown-menu");
 
-  // Add mouseenter and mouseleave event listeners to each dropdown menu
-  ddMenus.forEach((ddMenu) => {
-    ddMenu.addEventListener("mouseenter", () => {
-      // Add "active" class when mouse enters the dropdown menu
-      ddMenu.classList.add("active");
-    });
+  // // Add mouseenter and mouseleave event listeners to each dropdown menu
+  // ddMenus.forEach((ddMenu) => {
+  //   ddMenu.addEventListener("mouseenter", () => {
+  //     // Add "active" class when mouse enters the dropdown menu
+  //     ddMenu.classList.add("active");
+  //   });
 
-    ddMenu.addEventListener("mouseleave", () => {
-      // Remove "active" class when mouse leaves the dropdown menu
-      ddMenu.classList.remove("active");
-    });
-  });
+  //   ddMenu.addEventListener("mouseleave", () => {
+  //     // Remove "active" class when mouse leaves the dropdown menu
+  //     ddMenu.classList.remove("active");
+  //   });
+  // });
 });
