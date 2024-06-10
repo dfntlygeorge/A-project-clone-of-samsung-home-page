@@ -28,6 +28,10 @@ body {
   color: #000;
 }
 
+main {
+  position: relative;
+}
+
 h1 {
   /*This is for the hero section's header cuz this summarizes the purpose of the website*/
   font-size: clamp(1.5rem, 3vw, 4rem);
@@ -204,15 +208,114 @@ button:hover {
 
 /* START: Header Styles */
 
+header {
+  z-index: 3;
+}
+
+nav {
+  justify-content: space-between;
+}
+
+.nav-bar {
+  gap: 2rem;
+  align-items: center;
+}
+
 header .container button {
   background-color: transparent;
   color: var(--primary-color);
   padding: 0.4rem 0.6rem;
 }
 
-.dropdown-menu:hover button {
+.dropdown-menu:hover button,
+.no-dropdown:hover button {
   background-color: var(--primary-color);
   color: var(--secondary-color);
+}
+
+.container .icons button:hover {
+  background-color: transparent;
+}
+
+/* FEATURE: Dropdown menu */
+
+.left-start {
+  left: 4%;
+}
+
+.right-start {
+  right: 4%;
+}
+
+.dropdown-menu,
+.no-dropdown,
+.no-overlay,
+.normal-menu {
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  z-index: 4;
+}
+
+.product-menu {
+  align-items: center;
+}
+
+.content {
+  position: absolute;
+  background-color: var(--secondary-color);
+  gap: 10px;
+  top: 68px;
+  border-radius: 0 0 20px 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 4;
+}
+
+.content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0.5px; /* Border height */
+  background-color: #ccc; /* Border color */
+}
+
+.dropdown-menu:hover .content,
+.no-overlay:hover .content {
+  max-height: 800px;
+}
+
+.nav-overlay {
+  position: absolute; /* Use absolute positioning to cover the entire viewport */
+  top: 0;
+  left: 0;
+  height: 100%; /* Always set height to 100% */
+  width: 100%; /* Set width to 100% of the viewport */
+  background-color: #000;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease-in-out; /* Transition opacity for smooth effect */
+  z-index: 2; /* Ensure it appears above other elements */
+  pointer-events: none; /* Ensure it doesn't block mouse events when not visible */
+}
+
+.nav-overlay.active {
+  opacity: 0.6; /* Set opacity to 0.6 when active */
+  pointer-events: auto; /* Allow pointer events when active */
+}
+
+/* For User dropdown */
+
+.user-dd .content {
+  border-radius: 20px;
+  top: 60px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.user-dd .content::before {
+  height: 0;
 }
 
 /* END: Header Styles */
@@ -267,69 +370,6 @@ header .container button {
 
 /* FEATURE: Feature Name */
 
-nav {
-  justify-content: space-between;
-  align-items: center;
-}
-
-.nav-bar {
-  gap: 2rem;
-  align-items: center;
-}
-
-.icons button:hover {
-  background-color: transparent;
-}
-
-.icons button svg {
-  cursor: pointer;
-}
-
-/* Dropdown menu */
-
 /* temp code */
 
 /* end temp code */
-
-.left-start {
-  left: 4%;
-}
-
-.right-start {
-  right: 4%;
-}
-
-.dropdown-menu {
-  min-height: 42px;
-  display: flex;
-  align-items: center;
-}
-
-.product-menu {
-  align-items: center;
-}
-
-.content {
-  position: absolute;
-  background-color: #ccc;
-  gap: 10px;
-  top: 42px;
-  border-radius: 0 0 20px 20px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.content::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0.5px; /* Border height */
-  background-color: black; /* Border color */
-}
-
-.dropdown-menu:hover .content {
-  max-height: 800px;
-}
