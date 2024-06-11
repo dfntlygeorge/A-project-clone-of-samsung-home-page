@@ -267,7 +267,7 @@ header .container button {
   position: absolute;
   background-color: var(--secondary-color);
   gap: 10px;
-  top: 68px;
+  top: 70px;
   border-radius: 0 0 20px 20px;
   max-height: 0;
   overflow: hidden;
@@ -276,8 +276,8 @@ header .container button {
 }
 
 .content-wrapper {
-  margin: 1rem 4.5rem 2rem 1rem;
-  gap: 3rem;
+  margin: 1rem 4.5rem 2rem 1.5rem;
+  gap: 4rem;
 }
 
 .content-wrapper li a:hover {
@@ -430,6 +430,14 @@ header .container button {
 
 .user-dd .content::before {
   height: 0;
+}
+
+.user-dd .content-wrapper {
+  margin: 1.4rem 3.5rem 1.4rem 1.4rem;
+}
+
+.user-dd .content-wrapper ul {
+  gap: 1rem;
 }
 
 /* END: Header Styles */
