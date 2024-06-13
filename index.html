@@ -692,34 +692,22 @@
 
     <main>
       <section id="hero">
-        <div class="slider relative">
+        <div class="slider relative container">
           <div class="slides">
-            <div class="slide flex column relative center-y">
-              <img
-                src="assets/img/hero-slider/hero-samsung-tv-new-era-w01.png"
-                alt=""
-              />
-              <div
-                class="hero-text flex column g1 abs mw50 text-center center-y mt4"
-              >
-                <h1>Experience a New Era of Samsung AI TV</h1>
-                <div class="flex g1">
-                  <button class="underlined-btn">
-                    <span class="dynamic-un"
-                      >Watch the trailer<span class="static-un"></span
-                    ></span>
-                  </button>
-                  <button>Pre-order now</button>
-                </div>
-              </div>
-            </div>
-            <div class="slide flex column relative center-x">
+            <div class="slide cy flex column relative center-x">
               <video
                 src="assets/video/hero-samsung-galaxy-s24-w02.mp4"
                 muted
                 autoplay
+                class="pc"
               ></video>
-              <div class="hero-text s-hero flex column g1 abs">
+              <video
+                src="assets/video/hero-samsung-galaxy-s24-nw02.mp4"
+                class="mob"
+                muted
+                autoplay
+              ></video>
+              <div class="hero-text s-hero flex column g1 abs rw">
                 <h1>Galaxy S24 Series</h1>
                 <p class="lp">
                   FREE Galaxy Watch5 Pro, Random Case & SmartTag2
@@ -734,12 +722,66 @@
                 </div>
               </div>
             </div>
-            <div class="slide flex column relative center-x">
+            <div class="slide flex column relative center-y">
+              <img
+                src="assets/img/hero-slider/hero-samsung-wide-monitor-w05.png"
+                alt=""
+                class="pc"
+              />
+              <img
+                src="assets/img/hero-slider/hero-samsung-wide-monitor-nw05.png"
+                class="mob"
+                alt=""
+              />
+              <div
+                class="hero-text t-hero flex column abs text-center center-y rmt rw rg"
+              >
+                <h1>Wide Open! See the Wonders</h1>
+                <p class="lp">
+                  Find the perfect monitor and save up to P21,075
+                </p>
+                <button>Pre-order now</button>
+              </div>
+            </div>
+
+            <div class="slide flex column relative center-y">
+              <img
+                src="assets/img/hero-slider/hero-samsung-tv-new-era-w01.png"
+                alt=""
+                class="pc"
+              />
+              <img
+                src="assets/img/hero-slider/hero-samsung-tv-new-era-nw01.png"
+                class="mob"
+                alt=""
+              />
+              <div
+                class="hero-text t-hero flex column abs text-center center-y rmt rw rg"
+              >
+                <h1>Experience a New Era of Samsung AI TV</h1>
+                <div class="flex g1">
+                  <button class="underlined-btn">
+                    <span class="dynamic-un"
+                      >Watch the trailer<span class="static-un"></span
+                    ></span>
+                  </button>
+                  <button>Pre-order now</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide cy flex column relative center-x">
               <img
                 src="assets/img/hero-slider/hero-samsung-bespoke-ai-w03.png"
                 alt=""
+                class="pc"
               />
-              <div class="hero-text s-hero flex column g1 abs mw25">
+              <img
+                src="assets/img/hero-slider/hero-samsung-bespoke-ai-nw03.png"
+                class="mob"
+                alt=""
+              />
+              <div class="hero-text s-hero flex column rg abs rw rw2 rmt">
                 <h1>BESPOKE AI</h1>
                 <div>
                   <p class="lp">Do more with less.</p>
@@ -758,27 +800,19 @@
                 </div>
               </div>
             </div>
-            <div class="slide flex column relative center-y">
-              <img
-                src="assets/img/hero-slider/hero-samsung-wide-monitor-w05.png"
-                alt=""
-              />
-              <div
-                class="hero-text flex column g5 abs mw50 text-center center-y mt4"
-              >
-                <h1>Wide Open! See the Wonders</h1>
-                <p class="lp">
-                  Find the perfect monitor and save up to P21,075
-                </p>
-                <button>Pre-order now</button>
-              </div>
-            </div>
-            <div class="slide flex column relative center-x">
+
+            <div class="slide cy flex column relative center-x">
               <img
                 src="assets/img/hero-slider/hero-samsung-galaxy-campus-w06.png"
                 alt=""
+                class="pc"
               />
-              <div class="hero-text s-hero flex column g1 abs mw35">
+              <img
+                src="assets/img/hero-slider/hero-samsung-galaxy-campus-nw06.png"
+                alt=""
+                class="mob"
+              />
+              <div class="hero-text s-hero flex column rg rw rw2 abs rmt">
                 <h1>Start your future with Galaxy</h1>
                 <p class="lp">Student Ambassador Program</p>
                 <p class="lp">Valid from May 15, 2024- June 15, 2024</p>
@@ -787,6 +821,12 @@
                 </div>
               </div>
             </div>
+
+            <!-- <img src="" alt="">
+            <img src="" alt="">
+            <img src="" alt="">
+            <img src="" alt="">
+            <video src=""></video> -->
           </div>
           <span id="prev" class="cp abs">
             <svg
