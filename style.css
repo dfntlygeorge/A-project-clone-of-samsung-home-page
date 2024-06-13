@@ -22,12 +22,14 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   overflow-x: hidden;
+  overflow-y: hidden;
   background-color: #fff;
   color: #000;
   cursor: default;
 }
 
 main {
+  /*I fucking dug my own grave here, i thought it was the z-index or header's problem but it's me*/
   position: relative;
 }
 
@@ -108,6 +110,31 @@ button:hover {
 
 .text-center {
   text-align: center;
+}
+
+.center-xy {
+  justify-content: center;
+  align-items: center;
+}
+
+.center-x {
+  justify-content: center;
+}
+
+.center-y {
+  align-items: center;
+}
+
+.jsb {
+  justify-content: space-between;
+}
+
+.relative {
+  position: relative;
+}
+
+.abs {
+  position: absolute;
 }
 
 .transparent-bg {
@@ -209,7 +236,8 @@ button:hover {
 /* START: Header Styles */
 
 header {
-  z-index: 3;
+  position: relative;
+  z-index: 13;
 }
 
 nav {
@@ -256,11 +284,7 @@ header .container button {
   min-height: 70px;
   display: flex;
   align-items: center;
-  z-index: 4;
-}
-
-.product-menu {
-  align-items: center;
+  z-index: 12;
 }
 
 .content {
@@ -272,7 +296,6 @@ header .container button {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 4;
 }
 
 .content-wrapper {
@@ -306,24 +329,34 @@ header .container button {
 .dropdown-menu:hover .content,
 .no-overlay:hover .content {
   max-height: 800px;
+  /* z-index: 7; */
 }
 
-.nav-overlay {
+.nav-overlay,
+.search-overlay,
+.menu-overlay {
   position: absolute; /* Use absolute positioning to cover the entire viewport */
   top: 0;
   left: 0;
-  height: 100%; /* Always set height to 100% */
-  width: 100%; /* Set width to 100% of the viewport */
+  height: 100%;
+  width: 100%;
   background-color: #000;
   opacity: 0; /* Initially hidden */
   transition: opacity 0.3s ease-in-out; /* Transition opacity for smooth effect */
-  z-index: 2; /* Ensure it appears above other elements */
   pointer-events: none; /* Ensure it doesn't block mouse events when not visible */
+  /* z-index: 6; */
 }
 
 .nav-overlay.active {
   opacity: 0.6; /* Set opacity to 0.6 when active */
-  pointer-events: auto; /* Allow pointer events when active */
+  pointer-events: auto;
+  z-index: 10;
+  /* Ensure it appears above other elements */
+}
+
+.menu-overlay.active {
+  opacity: 0.8;
+  pointer-events: auto;
 }
 
 /* Specification for dropdown menu */
@@ -361,14 +394,6 @@ header .container button {
   transform: scale(1.05); /* Scale up by 5% on hover */
 }
 
-/* temp code */
-
-#max-height {
-  max-height: 800px;
-}
-
-/* end temp code */
-
 #card {
   padding: 1.5rem 0.3rem 1.3rem 0.3rem;
   gap: 0.5rem;
@@ -384,7 +409,6 @@ header .container button {
 
 .mobiledd-img {
   max-width: 65%;
-  /* margin-top: 0.7rem; */
 }
 
 .new {
@@ -420,6 +444,7 @@ header .container button {
 .galaxy-tab {
   gap: 0;
 }
+
 /* For User dropdown */
 
 .user-dd .content {
@@ -438,6 +463,283 @@ header .container button {
 
 .user-dd .content-wrapper ul {
   gap: 1rem;
+}
+
+/* FEATURE: Search Popout */
+/* 
+.search-overlay {
+  opacity: 0;
+  z-index: 10;
+} */
+
+.search-container {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  pointer-events: none;
+}
+
+.search-container.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 17;
+}
+
+.search-overlay.active {
+  opacity: 0.93;
+  pointer-events: auto;
+  z-index: 16;
+}
+
+.search-content {
+  width: 47%;
+}
+
+.search-block {
+  background-color: #fff;
+  padding: 1.3rem;
+  border-radius: 1.5rem;
+  gap: 2rem;
+}
+
+.search-block ul {
+  gap: 0.7rem;
+}
+
+.search-block ul a {
+  font-size: clamp(12px, 0.95vw, 1rem);
+}
+
+.search-block .heading {
+  margin-bottom: 1rem;
+}
+
+.search-block h4 {
+  font-size: clamp(14px, 1.25vw, 1.3rem);
+}
+
+.form {
+  gap: 0.5rem;
+}
+
+.search-input {
+  width: 70%;
+  font-size: clamp(14px, 1.5vw, 1.6rem);
+}
+
+.search-history::before {
+  content: "";
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  position: absolute;
+  top: -15px;
+}
+
+.close-btn,
+.search-btn,
+.clear-all-btn {
+  background-color: transparent;
+  padding: 0;
+}
+
+.close-btn:hover,
+.search-btn:hover {
+  background-color: transparent;
+}
+
+.close-btn {
+  position: absolute;
+  top: 2%;
+  right: 1%;
+}
+
+/* FEATURE: Hamburger menu */
+
+.ham-menu {
+  display: flex;
+}
+
+.side-menu {
+  height: 100%;
+  width: 0;
+  background-color: #fff;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 15;
+  transition: width 0.2s ease-in-out;
+}
+
+.menu-overlay.active {
+  opacity: 0.8;
+  pointer-events: auto;
+  z-index: 14;
+}
+
+.side-menu.active {
+  width: 350px;
+}
+
+.sidedown-menu .menu {
+  /* margin-inline: 1rem; */
+  cursor: pointer;
+  z-index: 1;
+}
+
+.side-content {
+  height: 590px;
+  max-width: 0;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 2;
+  background: white;
+}
+
+/* #cd {
+  cursor: default;
+} */
+
+.cd {
+  cursor: default;
+}
+.side-nav {
+  margin: 1rem;
+  gap: 5px;
+}
+
+.side-search-bar {
+  width: 100%;
+  height: 45px;
+  border-radius: 2rem;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  padding-left: 10px;
+  cursor: pointer;
+  transition: width 0.2s ease-in-out;
+}
+
+.back-btn {
+  display: none;
+  cursor: pointer;
+}
+
+.side-close-btn {
+  cursor: pointer;
+}
+
+.back-btn.active {
+  display: inline-block;
+}
+
+.side-content-wrapper {
+  width: 100%;
+  height: 590px;
+  overflow-y: auto;
+  /* padding: 1rem; */
+}
+
+.side-content-wrapper h4 {
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  margin-bottom: 1rem;
+}
+
+.sidedown-menu.active .side-content {
+  min-width: 100%;
+}
+
+.shifting {
+  overflow-y: scroll;
+  height: 550px;
+}
+
+.shifting > div {
+  padding-block: 1.3rem;
+  margin-inline: 1.1rem;
+}
+
+.bt {
+  border-top: 0.7px solid #ccc;
+}
+
+.g1 {
+  gap: 1.2rem;
+}
+
+.shifting .spt {
+  padding-top: 0.5rem;
+}
+
+.shifting a {
+  font-size: clamp(1.1rem, 1.45vw, 1.4rem);
+}
+
+/* .shifting li:hover {
+  font-weight: 600;
+  cursor: pointer;
+} */
+
+.bold-hover:hover,
+.bold-hover:hover h5 {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pr {
+  transform: rotate(270deg);
+}
+
+/* INNER DROPDOWN */
+
+.sd-menu {
+  width: 100%;
+}
+
+.menus {
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.sd-list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sd-menu.active .sd-list {
+  max-height: 500px;
+}
+
+.menus h5 {
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.sd-list {
+  background-color: #f7f7f7;
+}
+
+.m15 {
+  margin: 1rem 2rem;
+}
+
+.mi8 {
+  margin-inline: 0.8rem;
+}
+
+.g5 {
+  gap: 0.5rem;
+}
+
+.mt8 {
+  margin-top: 0.8rem;
 }
 
 /* END: Header Styles */
@@ -483,6 +785,17 @@ header .container button {
 /* END: Footer Styles */
 
 /* START: Responsiveness Styles */
+
+@media (max-width: 1279px) {
+  .ham-menu {
+    display: flex;
+  }
+
+  .product-menu,
+  .support-menu {
+    display: none;
+  }
+}
 
 /* Breakpoints */
 /* 1. 535px */
