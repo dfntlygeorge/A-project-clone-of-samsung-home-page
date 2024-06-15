@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let slideItems = document.querySelectorAll(".slider .slides .slide");
   let slideNext = document.getElementById("next");
   let slidePrev = document.getElementById("prev");
-  let dots = document.querySelectorAll(".slider .dots li");
+  let dots = document.querySelectorAll(".slider .dots li"); // controls
 
   let lengthItems = slideItems.length - 1;
   let active = 0;
@@ -200,6 +200,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Start the slider initially
   startSlider();
+
+  // Latest Deals
+
+  const tabBtns = document.querySelectorAll(".tab-btn");
+  const allContent = document.querySelectorAll(".product-slide");
+
+  tabBtns.forEach((tab, index) => {
+    tab.addEventListener("click", (e) => {
+      tabBtns.forEach((tab) => {
+        tab.classList.remove("active");
+      });
+      tab.classList.add("active");
+
+      allContent.forEach((content) => {
+        content.classList.remove("active");
+      });
+      allContent[index].classList.add("active");
+    });
+  });
+
+  const tabBox = document.querySelector(".tab-btns");
+
+  const scrollAmount = 100; // Adjust this value to control how much it scrolls on each click
+
+  tabBox.addEventListener("click", (e) => {
+    const { clientWidth, scrollWidth, scrollLeft } = tabBox;
+    const clickPosition = e.clientX - tabBox.getBoundingClientRect().left;
+    const threshold = clientWidth * 0.45; // 35% of the tabBox width
+
+    if (clickPosition >= clientWidth - threshold) {
+      // Click is in the last 35%, scroll to the right
+      const newScrollLeft = Math.min(
+        scrollLeft + scrollAmount,
+        scrollWidth - clientWidth
+      );
+      tabBox.scrollTo({ left: newScrollLeft, behavior: "smooth" });
+    } else if (clickPosition <= threshold) {
+      // Click is in the first 35%, scroll to the left
+      const newScrollLeft = Math.max(scrollLeft - scrollAmount, 0);
+      tabBox.scrollTo({ left: newScrollLeft, behavior: "smooth" });
+    }
+  });
 
   //-----TO BE DELETED-----
   // Get all the dropdown menus
