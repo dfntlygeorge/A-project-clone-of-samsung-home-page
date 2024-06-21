@@ -243,6 +243,54 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Samsung exclusive slider
+  const ecContainer = document.querySelector(".ecards");
+  const eprev = document.querySelector(".eprev");
+  const enext = document.querySelector(".enext");
+  const eScrollAmount = 400;
+
+  function updateButtonVisibility() {
+    // Check if there's room to scroll left
+    if (ecContainer.scrollLeft === 0) {
+      eprev.style.display = "none";
+    } else {
+      eprev.style.display = "block";
+    }
+
+    // Check if there's room to scroll right
+    if (
+      ecContainer.scrollLeft + ecContainer.clientWidth >=
+      ecContainer.scrollWidth
+    ) {
+      enext.style.display = "none";
+    } else {
+      enext.style.display = "block";
+    }
+  }
+
+  // Initial check to set the button visibility on page load
+  updateButtonVisibility();
+
+  eprev.addEventListener("click", () => {
+    ecContainer.scrollBy({
+      top: 0,
+      left: -eScrollAmount,
+      behavior: "smooth",
+    });
+    setTimeout(updateButtonVisibility, 300);
+  });
+
+  enext.addEventListener("click", () => {
+    ecContainer.scrollBy({
+      top: 0,
+      left: eScrollAmount,
+      behavior: "smooth",
+    });
+    setTimeout(updateButtonVisibility, 300);
+  });
+
+  ecContainer.addEventListener("scroll", updateButtonVisibility);
+
   //-----TO BE DELETED-----
   // Get all the dropdown menus
   // const ddMenus = document.querySelectorAll(".dropdown-menu");
