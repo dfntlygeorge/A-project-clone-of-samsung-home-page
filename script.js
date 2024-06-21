@@ -201,47 +201,52 @@ document.addEventListener("DOMContentLoaded", function () {
   // Start the slider initially
   startSlider();
 
-  // Latest Deals
+  function setupTabSwitching(sectionId) {
+    const section = document.getElementById(sectionId);
+    const tabBtns = section.querySelectorAll(".tab-btn");
+    const allContent = section.querySelectorAll(".product-slide");
 
-  const tabBtns = document.querySelectorAll(".tab-btn");
-  const allContent = document.querySelectorAll(".product-slide");
+    tabBtns.forEach((tab, index) => {
+      tab.addEventListener("click", (e) => {
+        tabBtns.forEach((tab) => {
+          tab.classList.remove("active");
+        });
+        tab.classList.add("active");
 
-  tabBtns.forEach((tab, index) => {
-    tab.addEventListener("click", (e) => {
-      tabBtns.forEach((tab) => {
-        tab.classList.remove("active");
+        allContent.forEach((content) => {
+          content.classList.remove("active");
+        });
+        allContent[index].classList.add("active");
       });
-      tab.classList.add("active");
-
-      allContent.forEach((content) => {
-        content.classList.remove("active");
-      });
-      allContent[index].classList.add("active");
     });
-  });
 
-  const tabBox = document.querySelector(".tab-btns");
+    const tabBox = section.querySelector(".tab-btns");
 
-  const scrollAmount = 100; // Adjust this value to control how much it scrolls on each click
+    const scrollAmount = 100; // Adjust this value to control how much it scrolls on each click
 
-  tabBox.addEventListener("click", (e) => {
-    const { clientWidth, scrollWidth, scrollLeft } = tabBox;
-    const clickPosition = e.clientX - tabBox.getBoundingClientRect().left;
-    const threshold = clientWidth * 0.45; // 35% of the tabBox width
+    tabBox.addEventListener("click", (e) => {
+      const { clientWidth, scrollWidth, scrollLeft } = tabBox;
+      const clickPosition = e.clientX - tabBox.getBoundingClientRect().left;
+      const threshold = clientWidth * 0.45; // 45% of the tabBox width
 
-    if (clickPosition >= clientWidth - threshold) {
-      // Click is in the last 35%, scroll to the right
-      const newScrollLeft = Math.min(
-        scrollLeft + scrollAmount,
-        scrollWidth - clientWidth
-      );
-      tabBox.scrollTo({ left: newScrollLeft, behavior: "smooth" });
-    } else if (clickPosition <= threshold) {
-      // Click is in the first 35%, scroll to the left
-      const newScrollLeft = Math.max(scrollLeft - scrollAmount, 0);
-      tabBox.scrollTo({ left: newScrollLeft, behavior: "smooth" });
-    }
-  });
+      if (clickPosition >= clientWidth - threshold) {
+        // Click is in the last 45%, scroll to the right
+        const newScrollLeft = Math.min(
+          scrollLeft + scrollAmount,
+          scrollWidth - clientWidth
+        );
+        tabBox.scrollTo({ left: newScrollLeft, behavior: "smooth" });
+      } else if (clickPosition <= threshold) {
+        // Click is in the first 45%, scroll to the left
+        const newScrollLeft = Math.max(scrollLeft - scrollAmount, 0);
+        tabBox.scrollTo({ left: newScrollLeft, behavior: "smooth" });
+      }
+    });
+  }
+
+  // Initialize for different sections
+  setupTabSwitching("featured");
+  setupTabSwitching("mobile");
 
   // Samsung exclusive slider
   const ecContainer = document.querySelector(".ecards");
