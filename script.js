@@ -247,6 +247,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize for different sections
   setupTabSwitching("featured");
   setupTabSwitching("mobile");
+  setupTabSwitching("tvsounds");
+  setupTabSwitching("home-app");
 
   // Samsung exclusive slider
   const ecContainer = document.querySelector(".ecards");

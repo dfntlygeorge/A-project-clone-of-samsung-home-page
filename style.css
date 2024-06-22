@@ -76,7 +76,8 @@ video {
   font-style: italic;
 }
 
-button {
+button,
+.wbutton {
   background-color: var(--primary-color);
   color: var(--secondary-color);
   padding: 0.6rem 1.3rem;
@@ -86,6 +87,15 @@ button {
 
 button:hover {
   background-color: var(--primary-color-lighter);
+}
+
+.wbutton {
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
+}
+
+.wbutton:hover {
+  background-color: var(--secondary-color-darker);
 }
 
 /* START: Utility Styles */
@@ -155,8 +165,21 @@ button:hover {
   padding-bottom: 7px;
 }
 
+.wunderlined-btn {
+  color: var(--secondary-color);
+  background-color: transparent;
+  padding: 0;
+  padding-bottom: 7px;
+
+  .static-un,
+  .dynamic-un::after {
+    background-color: var(--secondary-color);
+  }
+}
+
 .underlined-btn:hover,
-.focus-un-btn:hover {
+.focus-un-btn:hover,
+.wunderlined-btn:hover {
   background-color: transparent;
 }
 
@@ -190,12 +213,14 @@ button:hover {
 
 /* BRO THIS IS HOLY GRAIL - The juice behind the two features above*/
 
-.underlined-btn:hover .static-un {
+.underlined-btn:hover .static-un,
+.wunderlined-btn:hover .static-un {
   opacity: 0; /* Hide the acting underline on hover */
 }
 
 .underlined-btn:hover .dynamic-un::after,
-.focus-un-btn.active .dynamic-un::after {
+.focus-un-btn.active .dynamic-un::after,
+.wunderlined-btn:hover .dynamic-un::after {
   /*Show the underline hover effect*/
   width: 100%;
   left: 0;
@@ -223,6 +248,10 @@ button:hover {
 
 .hide {
   display: none;
+}
+
+.hide-opa{
+  opacity: 0;
 }
 
 .cp {
@@ -1050,34 +1079,94 @@ header .container button {
 
 /* START: Mobile Products Styles */
 
-#mobile .container{
+#mobile .container,
+#tvsounds .container, #home-app .container {
   padding: 2rem 0.7rem 1.8rem 0.7rem;
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
   max-width: 100vw;
 }
 
-.large-pn{
+.large-pn {
   font-size: clamp(1.5rem, 4vw, 3rem);
   font-weight: 700;
 }
 
-.mpn-container, .mimg-container{
+.mpn-container,
+.mimg-container {
   padding: 0.3rem;
 }
 
-.cta-mobile{
+.cta-mobile {
   gap: 1rem;
 }
 
-.mpn-container{
+.mpn-container {
   gap: 0.3rem;
 }
-
-
 
 /* END: Mobile Products Styles */
 
 /* START: TV and Home Appliances Styles */
+
+#tvsounds, #home-app {
+position: relative;
+
+  .container {
+    padding: 0;
+    z-index: 1;
+    background-color: transparent;
+  }
+
+  .product-slides {
+    top: 0;
+  }
+
+  .product-slide {
+    max-width: 100%;
+  }
+
+  .mimg {
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  .feature-header {
+    z-index: 4;
+    padding-top: 3rem;
+    color: var(--secondary-color);
+    width: 100%;
+  }
+
+  .focus-un-btn {
+    color: var(--secondary-color);
+
+    .dynamic-un::after {
+      background-color: var(--secondary-color);
+    }
+  }
+
+  .mpn-container {
+    z-index: 4;
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+
+    .large-pn {
+      color: var(--secondary-color);
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+  }
+}
+
+/* palipat sa util */
+
+.shortd{
+  color: var(--secondary-color);
+  font-size: clamp(13px, 1.3vw, 1.2rem);
+}
 
 /* END: TV and Home Appliances Styles */
 
@@ -1187,8 +1276,6 @@ header .container button {
   .e-card {
     min-width: 200px;
   }
-
-  
 }
 
 /* Breakpoints */
