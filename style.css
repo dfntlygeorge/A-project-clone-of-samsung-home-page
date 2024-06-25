@@ -759,7 +759,7 @@ header .container button {
 /* START: Hero Styles */
 
 .slider {
-  max-width: 1350px;
+  width: 1350px;
   height: 600px;
   position: relative;
   overflow: hidden;
@@ -1207,6 +1207,67 @@ header .container button {
 
 /* START: Recommended Products Styles */
 
+.reco-container{
+  max-width: 80%; /* Adjust this width as needed */
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.reco-products {
+  gap: 1.4rem;
+  /* max-width: 82%; */
+  /* overflow: hidden; */
+  position: relative;
+  display: flex;
+  transition: all 0.5s ease;
+}
+
+.reco-product{
+  background-color: #f7f7f7;
+  max-width: 245px;
+  /* flex: 1; */
+  border-radius: 20px;
+  flex: 0 0 25%; /* 100% / 4 slides = 25% */
+  /* box-sizing: border-box; */
+  /* padding: 10px; */
+
+ 
+  .wrapper{
+    margin: 1rem;
+  }
+}
+
+.reco-img{
+  padding-top: 2rem ;
+}
+
+.reco-details{
+  height: 100%;
+  gap: 1.8rem;
+
+  .pn{
+    font-size: clamp(13px, 1.25vw, 1.2rem);
+    font-weight: 600;
+  }
+}
+
+/* General styles for the circle */
+
+
+
+.black{
+  background-color: #000;
+}
+
+#recoprev{
+  left: 0;
+  top: 50%;
+}
+
+#reconext{
+  right: 0;
+  top: 50%;
+}
 /* END: Recommended Products Styles */
 
 /* START: Story Styles */
@@ -1227,6 +1288,18 @@ header .container button {
 
 /* START: Responsiveness Styles */
 
+@media (max-width: 1024px) {
+  .reco-product {
+    flex: 0 0 33.33%; /* 100% / 3 slides = 33.33% */
+  }
+}
+
+@media (max-width: 600px) {
+  .reco-product {
+    flex: 0 0 50%; /* 100% / 2 slides = 50% */
+  }
+}
+
 @media (max-width: 1279px) {
   .ham-menu {
     display: flex;
@@ -1236,6 +1309,7 @@ header .container button {
   .support-menu {
     display: none;
   }
+
 }
 
 @media (max-width: 799px) {

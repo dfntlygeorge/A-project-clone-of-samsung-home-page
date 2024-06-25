@@ -329,4 +329,100 @@ document.addEventListener("DOMContentLoaded", function () {
   //   // and can expand to fill the available space equally (1fr)
   //   menu.style.gridTemplateColumns = `repeat(${childCount}, minmax(min-content, 1fr))`;
   // });
+
+  let recoContainer = document.querySelector(".reco-products");
+  let recoItems = document.querySelectorAll(".reco-product");
+  let recoNext = document.getElementById("reconext");
+  let recoPrev = document.getElementById("recoprev");
+  
+  let recoItemCount = recoItems.length;
+  let slidesToShow;
+  let currentIndex = 0;
+  
+  function updateSlidesToShow() {
+    const screenWidth = window.innerWidth;
+    if (screenWidth < 600) {
+      slidesToShow = 2;
+    } else if (screenWidth < 1024) {
+      slidesToShow = 3;
+    } else {
+      slidesToShow = 4;
+    }
+  }
+  
+  function moveToNextSlide() {
+    if (currentIndex + slidesToShow < recoItemCount) {
+      currentIndex += slidesToShow;
+    } else {
+      currentIndex = 0;
+    }
+    updateRecoSlider();
+  }
+  
+  function moveToPrevSlide() {
+    if (currentIndex - slidesToShow >= 0) {
+      currentIndex -= slidesToShow;
+    } else {
+      currentIndex = Math.max(0, recoItemCount - slidesToShow);
+    }
+    updateRecoSlider();
+  }
+  
+  recoNext.onclick = moveToNextSlide;
+  recoPrev.onclick = moveToPrevSlide;
+  
+  function updateRecoSlider() {
+    recoContainer.style.transform = `translateX(${-recoItems[currentIndex].offsetLeft}px)`;
+  }
+  
+  // Update the slider position and number of slides to show on window resize
+  window.onresize = function(event) {
+    updateSlidesToShow();
+    updateRecoSlider();
+  };
+  
+  // Initial setup
+  updateSlidesToShow();
+  updateRecoSlider();
+  
+  
+
 });
+
+// $(document).ready(() => {
+//   $('.reco-products').slick({
+//     dots: true,
+//     infinite: false,
+//     speed: 300,
+//     slidesToShow: 2,
+//     slidesToScroll: 4,
+//     responsive: [
+//       {
+//         breakpoint: 1024,
+//         settings: {
+//           slidesToShow: 3,
+//           slidesToScroll: 3,
+//           infinite: true,
+//           dots: true
+//         }
+//       },
+//       {
+//         breakpoint: 600,
+//         settings: {
+//           slidesToShow: 2,
+//           slidesToScroll: 2
+//         }
+//       },
+//       {
+//         breakpoint: 480,
+//         settings: {
+//           slidesToShow: 1,
+//           slidesToScroll: 1
+//         }
+//       }
+//       // You can unslick at a given breakpoint now by adding:
+//       // settings: "unslick"
+//       // instead of a settings object
+//     ]
+//   });
+// })
