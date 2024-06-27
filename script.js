@@ -96,60 +96,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // FEATURE: Hero Slider
-
-  // let slider = document.querySelector(".slider .slides");
-  // let slideItems = document.querySelectorAll(".slider .slides .slide");
-  // let slideNext = document.getElementById("next");
-  // let slidePrev = document.getElementById("prev");
-  // let dots = document.querySelectorAll(".slider .dots li");
-
-  // let lengthItems = slideItems.length - 1;
-  // let active = 0;
-
-  // slideNext.onclick = function () {
-  //   active = active + 1 <= lengthItems ? active + 1 : 0;
-  //   reloadSlider();
-  // };
-  // slidePrev.onclick = function () {
-  //   active = active - 1 >= 0 ? active - 1 : lengthItems;
-  //   reloadSlider();
-  // };
-  // let refreshInterval = setInterval(() => {
-  //   slideNext.click();
-  // }, 3000);
-  // function reloadSlider() {
-  //   slider.style.left = -slideItems[active].offsetLeft + "px";
-  //   //
-  //   let last_active_dot = document.querySelector(".slider .dots li.active");
-  //   last_active_dot.classList.remove("active");
-  //   dots[active].classList.add("active");
-
-  //   clearInterval(refreshInterval);
-  //   refreshInterval = setInterval(() => {
-  //     slideNext.click();
-  //   }, 5000);
-  // }
-
-  // dots.forEach((li, key) => {
-  //   li.addEventListener("click", () => {
-  //     active = key;
-  //     reloadSlider();
-  //   });
-  // });
-  // window.onresize = function (event) {
-  //   reloadSlider();
-  // };
-
-  // GPT CODE
 
   let slider = document.querySelector(".slider .slides");
-  let slideItems = document.querySelectorAll(".slider .slides .slide");
+  let heroSlideItems = document.querySelectorAll(".slider .slides .slide");
   let slideNext = document.getElementById("next");
   let slidePrev = document.getElementById("prev");
   let dots = document.querySelectorAll(".slider .dots li"); // controls
 
-  let lengthItems = slideItems.length - 1;
+  let lengthItems = heroSlideItems.length - 1;
   let active = 0;
   let refreshInterval = 6000;
 
@@ -174,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function reloadSlider() {
-    slider.style.left = -slideItems[active].offsetLeft + "px";
+    slider.style.left = -heroSlideItems[active].offsetLeft + "px";
     let last_active_dot = document.querySelector(".slider .dots li.active");
     last_active_dot.classList.remove("active");
     dots[active].classList.add("active");
@@ -250,141 +204,141 @@ document.addEventListener("DOMContentLoaded", function () {
   setupTabSwitching("tvsounds");
   setupTabSwitching("home-app");
 
-  // Samsung exclusive slider
-  const ecContainer = document.querySelector(".ecards");
-  const eprev = document.querySelector(".eprev");
-  const enext = document.querySelector(".enext");
-  const eScrollAmount = 400;
+  // // Samsung exclusive slider
+  // const ecContainer = document.querySelector(".ecards");
+  // const eprev = document.querySelector(".eprev");
+  // const enext = document.querySelector(".enext");
+  // const eScrollAmount = 400;
 
-  function updateButtonVisibility() {
-    // Check if there's room to scroll left
-    if (ecContainer.scrollLeft === 0) {
-      eprev.style.display = "none";
-    } else {
-      eprev.style.display = "block";
-    }
+  
 
-    // Check if there's room to scroll right
-    if (
-      ecContainer.scrollLeft + ecContainer.clientWidth >=
-      ecContainer.scrollWidth
-    ) {
-      enext.style.display = "none";
-    } else {
-      enext.style.display = "block";
-    }
-  }
+  // // Initial check to set the button visibility on page load
+  // updateButtonVisibility();
 
-  // Initial check to set the button visibility on page load
-  updateButtonVisibility();
-
-  eprev.addEventListener("click", () => {
-    ecContainer.scrollBy({
-      top: 0,
-      left: -eScrollAmount,
-      behavior: "smooth",
-    });
-    setTimeout(updateButtonVisibility, 300);
-  });
-
-  enext.addEventListener("click", () => {
-    ecContainer.scrollBy({
-      top: 0,
-      left: eScrollAmount,
-      behavior: "smooth",
-    });
-    setTimeout(updateButtonVisibility, 300);
-  });
-
-  ecContainer.addEventListener("scroll", updateButtonVisibility);
-
-  //-----TO BE DELETED-----
-  // Get all the dropdown menus
-  // const ddMenus = document.querySelectorAll(".dropdown-menu");
-
-  // // Add mouseenter and mouseleave event listeners to each dropdown menu
-  // ddMenus.forEach((ddMenu) => {
-  //   ddMenu.addEventListener("mouseenter", () => {
-  //     // Add "active" class when mouse enters the dropdown menu
-  //     ddMenu.classList.add("active");
+  // eprev.addEventListener("click", () => {
+  //   ecContainer.scrollBy({
+  //     top: 0,
+  //     left: -eScrollAmount,
+  //     behavior: "smooth",
   //   });
-
-  //   ddMenu.addEventListener("mouseleave", () => {
-  //     // Remove "active" class when mouse leaves the dropdown menu
-  //     ddMenu.classList.remove("active");
-  //   });
+  //   setTimeout(updateButtonVisibility, 300);
   // });
 
-  // // Select all elements with the class name 'dropdown-menu'
-  // const dropdownMenus = document.querySelectorAll(".dropdown-content");
-
-  // // Iterate over each 'dropdown-menu' element
-  // dropdownMenus.forEach((menu) => {
-  //   // Get the number of child elements within the current 'dropdown-menu'
-  //   const childCount = menu.children.length;
-
-  //   // Set the grid-template-columns property dynamically
-  //   // This creates a grid with a number of columns equal to the number of child elements
-  //   // Each column will have a minimum width that fits its content (min-content)
-  //   // and can expand to fill the available space equally (1fr)
-  //   menu.style.gridTemplateColumns = `repeat(${childCount}, minmax(min-content, 1fr))`;
+  // enext.addEventListener("click", () => {
+  //   ecContainer.scrollBy({
+  //     top: 0,
+  //     left: eScrollAmount,
+  //     behavior: "smooth",
+  //   });
+  //   setTimeout(updateButtonVisibility, 300);
   // });
 
-  let recoContainer = document.querySelector(".reco-products");
-  let recoItems = document.querySelectorAll(".reco-product");
-  let recoNext = document.getElementById("reconext");
-  let recoPrev = document.getElementById("recoprev");
+  // ecContainer.addEventListener("scroll", updateButtonVisibility);
+  class Slider {
+    constructor(containerSelector, itemSelector, prevButtonSelector, nextButtonSelector) {
+      this.slideContainer = document.querySelector(containerSelector);
+      this.slideItems = document.querySelectorAll(itemSelector);
+      this.rPrev = document.querySelector(prevButtonSelector);
+      this.rNext = document.querySelector(nextButtonSelector);
   
-  let recoItemCount = recoItems.length;
-  let slidesToShow;
-  let currentIndex = 0;
+      this.slideItemCount = this.slideItems.length;
+      this.slidesToShow;
+      this.currentIndex = 0;
   
-  function updateSlidesToShow() {
-    const screenWidth = window.innerWidth;
-    if (screenWidth < 600) {
-      slidesToShow = 2;
-    } else if (screenWidth < 1024) {
-      slidesToShow = 3;
-    } else {
-      slidesToShow = 4;
+      this.updateSlidesToShow();
+      this.updateSlider();
+      this.updateButtonVisibility();
+  
+      this.rNext.onclick = this.moveToNextSlide.bind(this);
+      this.rPrev.onclick = this.moveToPrevSlide.bind(this);
+      this.slideContainer.addEventListener("scroll", this.updateButtonVisibility.bind(this));
+  
+      window.onresize = () => {
+        this.updateSlidesToShow();
+        this.updateSlider();
+      };
+    }
+  
+    updateButtonVisibility() {
+      if (this.currentIndex === 0) {
+        this.rPrev.style.display = "none";
+      } else {
+        this.rPrev.style.display = "block";
+      }
+  
+      if (this.currentIndex >= this.slideItemCount - this.slidesToShow) {
+        this.rNext.style.display = "none";
+      } else {
+        this.rNext.style.display = "block";
+      }
+    }
+  
+    updateSlidesToShow() {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 600) {
+        this.slidesToShow = 2;
+      } else if (screenWidth < 1024) {
+        this.slidesToShow = 3;
+      } else {
+        this.slidesToShow = 4;
+      }
+    }
+  
+    getItemWidth() {
+      const gap = parseFloat(window.getComputedStyle(this.slideContainer).columnGap || 0);
+      return this.slideItems[0].offsetWidth + gap;
+    }
+  
+    moveToNextSlide() {
+      if (this.currentIndex < this.slideItemCount - this.slidesToShow) {
+        this.currentIndex += 1;
+      }
+      this.updateSlider();
+    }
+  
+    moveToPrevSlide() {
+      if (this.currentIndex > 0) {
+        this.currentIndex -= 1;
+      }
+      this.updateSlider();
+    }
+  
+    updateSlider() {
+      const itemWidth = this.getItemWidth();
+      this.slideContainer.style.transform = `translateX(${-this.currentIndex * itemWidth}px)`;
+      this.updateButtonVisibility();
     }
   }
   
-  function moveToNextSlide() {
-    if (currentIndex + slidesToShow < recoItemCount) {
-      currentIndex += slidesToShow;
-    } else {
-      currentIndex = 0;
-    }
-    updateRecoSlider();
-  }
+  // Usage
+  const slider1 = new Slider('.slide-container', '.slide-item', '#r-prev', '#r-next');
+  // Add more sliders as needed
+  const slider2 = new Slider('.ecards', '.e-card', '#eprev', '#enext');
   
-  function moveToPrevSlide() {
-    if (currentIndex - slidesToShow >= 0) {
-      currentIndex -= slidesToShow;
-    } else {
-      currentIndex = Math.max(0, recoItemCount - slidesToShow);
-    }
-    updateRecoSlider();
-  }
   
-  recoNext.onclick = moveToNextSlide;
-  recoPrev.onclick = moveToPrevSlide;
   
-  function updateRecoSlider() {
-    recoContainer.style.transform = `translateX(${-recoItems[currentIndex].offsetLeft}px)`;
-  }
-  
-  // Update the slider position and number of slides to show on window resize
-  window.onresize = function(event) {
-    updateSlidesToShow();
-    updateRecoSlider();
-  };
-  
-  // Initial setup
-  updateSlidesToShow();
-  updateRecoSlider();
-  
+  // Color options
+
+  document.querySelectorAll('.product-nav button').forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.product-nav button').forEach(btn => btn.classList.remove('active'));
+        // Add active class to the clicked button
+        this.classList.add('active');
+        
+        // Hide all images
+        document.querySelectorAll('.product-img').forEach(img => img.classList.add('hide'));
+        
+        // Get the color from the clicked button and show the corresponding image
+        const color = this.getAttribute('data-color');
+        document.querySelector(`.product-img.${color}`).classList.remove('hide');
+        
+        // Update color text in the form
+        document.querySelectorAll('.color-option span').forEach(span => span.classList.remove('active'));
+        document.querySelector(`.color-option span[data-color="${color}"]`).classList.add('active');
+    });
+});
+
   
 
 });
