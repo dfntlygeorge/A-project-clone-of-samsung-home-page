@@ -40,7 +40,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.4rem, 2.7vw, 3.4rem);
+  font-size: clamp(2rem, 2.7vw, 3.4rem);
   font-weight: 650;
 }
 
@@ -239,7 +239,9 @@ button:hover {
   color: var(--primary-color);
   background-color: transparent;
   border: 0.3px solid #ccc;
-  padding: 0.3rem 0.7rem;
+  font-size: 12px;
+  padding: 0.6rem 1rem 0.3rem 1rem;
+  white-space: nowrap;
 }
 
 .keyword-btn:hover {
@@ -595,6 +597,7 @@ header .container button {
   overflow: hidden;
   z-index: 15;
   transition: width 0.2s ease-in-out;
+  display: none;
 }
 
 .menu-overlay.active {
@@ -615,11 +618,13 @@ header .container button {
 .side-content {
   height: 590px;
   max-width: 0;
+  width: 100%;
   top: 0;
   right: 0;
   overflow: hidden;
   z-index: 2;
   background: white;
+  transition: max-width 0.2s ease-in;
 }
 
 .side-nav {
@@ -627,7 +632,7 @@ header .container button {
   gap: 5px;
 }
 
-.side-search-bar {
+.side-search-bar, .searchbarlast {
   width: 100%;
   height: 45px;
   border-radius: 2rem;
@@ -638,6 +643,8 @@ header .container button {
   cursor: pointer;
   transition: width 0.2s ease-in-out;
 }
+
+
 
 .back-btn {
   display: none;
@@ -663,8 +670,11 @@ header .container button {
   margin-bottom: 1rem;
 }
 
+
+
 .sidedown-menu.active .side-content {
-  min-width: 100%;
+  max-width: 1000px;
+  /* min-width: 1000px; */
 }
 
 .shifting {
@@ -1323,17 +1333,389 @@ margin-block:clamp(1.5rem, 3vw, 3.5rem);
 
 /* START: Story Styles */
 
+#story .container{
+gap: 1rem;
+
+& > *{
+  flex: 1;
+}
+}
+
+#story h2{
+  margin-block: 3.5rem 2rem;
+}
+
+#story h3{
+  font-size: clamp(14px, 2vw, 2.5rem);
+}
+
+#story .titlenum{
+  font-size: clamp(14px, 1.2vw, 2rem);
+  font-weight: 600;
+}
+
+.stitle-container{
+  margin-top: 7vw;
+}
+
+
+  .stitle {
+    display: grid;
+    grid-template-columns: 10% 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    /* grid-row-gap: clamp(1.15rem, 1.5vw, 1.4rem); */
+    }
+    
+    .titlenum { grid-area: 1 / 1 / 2 / 2; }
+    .riltitle { grid-area: 1 / 2 / 2 / 3;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+    .scta { grid-area: 2 / 2 / 3 / 3;}
+
+.titlenum,.riltitle{
+  padding-block: 1.5rem 0;
+}
+
+.riltitle,.scta,
+.titlenum{
+  margin-left: 1rem;
+}
+
+.scta{
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.05s ease;
+}
+
+.scta .wrapper{
+  margin-block: 3.5% 4% ;
+}
+
+
+.stitle.active .scta{
+  max-height: 100px;
+}
+
+.stitle.active::before{
+  content: "";
+  height: 2.5px;
+  width: 100%;
+  background-color: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.stitle.active .scta::after{
+  content: "";
+  height: 1px;
+  width: 100%;
+  background-color: #ccc;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+
+.scta::after{
+bottom: 0;
+left: 0;
+}
+
+
+
+.si-img{
+  display: none;
+  transition: transform 0.1s ease-in;
+  cursor: pointer;
+  border-radius: 30px;
+  object-fit: contain;
+}
+
+.mosi-img{
+  transition: transform 0.1s ease-in;
+  cursor: pointer;
+}
+
+.si-img:hover, .mosi-img:hover{
+  transform: scale(1.05);
+}
+
+.si-container{
+  overflow: hidden;
+  border-radius: 30px;
+}
+
+.si-img.active{
+  display: block;
+}
+
+.moimg-si{
+  max-width: fit-content;
+  max-height: fit-content;
+  overflow: hidden;
+  border-radius: 30px;
+}
+
+.story-slider-container{
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  gap: 0.3rem
+}
+
+
+.sty-slide{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.8rem;
+  min-width: 97%;
+  transition: all 0.4s ease-in-out;
+
+  .underlined-btn{
+    margin-block: 1rem;
+  }
+}
+
+.sdots{
+  gap: 1.2rem;
+  width: fit-content;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.sdot{
+  height: 13px;
+  width: 13px;
+  border-radius: 50%;
+  background-color: #505050;
+  cursor: pointer;
+}
+
+.sdot.active{
+  background-color: #000;
+}
+
 /* END: Story Styles */
 
 /* START: Search Bar Styles */
+
+#search-bar h2{
+  margin-block: 4rem 1.5rem;
+}
+
+.searchbarlast{
+  width: 400px;
+  cursor: initial;
+  padding-inline: 1.2rem;
+  gap: 0.7rem;
+  margin: 0 auto;
+}
+
+.searchy-input{
+  background-color: transparent;
+  font-size: 1rem;
+  width: 80%;
+}
+
+.keywords-cont{
+  padding-top: 0.9rem;
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin: 0 auto;
+}
+
+
 
 /* END: Search Bar Styles */
 
 /* START: Notice Styles */
 
+#notice .container{
+  margin-top: 4rem;
+  padding-inline: 5.5rem;
+}
+
+.notice-cont{
+  gap: 1rem;
+}
+
+.notice-cont li{
+  font-size: 11.5px;
+}
+
+
 /* END: Notice Styles */
 
 /* START: Footer Styles */
+
+footer{
+  margin-top: 2rem;
+}
+
+.nav-links.container{
+  padding: 0;
+}
+
+.nav-links{
+  width: 100%;
+}
+
+.border-nav{
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-links > div:not(:last-child){
+  border-right: 1px solid #ccc;
+}
+
+.nav-links > div{
+  flex: 1;
+  padding: 0.8rem 1.3rem 1.8rem 1.3rem;
+  gap: 1rem;
+}
+
+.nav-links > div ul{
+  gap: 0.65rem;
+}
+
+.nav-links a{
+  font-size: 13.5px;
+
+  &:hover{
+    color: blue;
+    text-decoration: underline;
+  }
+}
+
+.martop08{
+  margin-top: 0.8rem;
+}
+
+/* Dropdown nav */
+
+.footerdd-nav{
+  border-top: 1px solid #ccc;
+  display: none;
+
+  .container{
+    width: 100%;
+    padding-inline: 1.5rem;
+  }
+}
+
+.navdd{
+  border-bottom: 1px solid #ccc;
+
+  .menus{
+    margin: 1rem;
+  }
+
+  .navdd-content{
+    margin-inline: 1.6rem;
+    margin-top: 1.6rem;
+    transition: max-height 0.7s ease;
+  }
+
+  & h3{
+    font-size: clamp(1.5rem, 4.3vw, 3.5rem);
+  }
+
+  & ul{
+    gap: 1rem;
+  }
+
+  & a{
+    font-size: clamp(1.3rem, 3.8vw, 2rem);
+  }
+
+  & a:hover{
+    color: blue;
+    text-decoration: underline;
+  }
+}
+.navdd-content{
+  max-height: 0;
+  overflow: hidden;
+}
+
+.navdd.active .navdd-content{
+  max-height: 700px;
+}
+
+/* .navdd{
+  transition: border-bottom 0.0000001s ease;
+}
+
+.navdd.active{
+  border-bottom: none;
+} */
+
+.navdd .updown{
+  transition: all 0.3s ease-in-out;
+}
+
+.navdd.active .updown{
+  transform: rotate(180deg);
+}
+
+.copyrights{
+  border-bottom: 1px solid #ccc;
+
+  & p{
+    margin-block: 2.2rem;
+  }
+}
+
+.language-selection{
+  font-weight: 600;
+  padding-right: 1.5rem;
+border-right: 1px solid #ccc;
+}
+
+.legalshits{
+  padding-left: 1.5rem;
+  gap: 1.5rem;
+}
+
+.last-footer{
+  padding-block: 1.2rem;
+}
+
+.socmeds{
+  gap: 0.8rem;
+}
+
+.mobver{
+  gap: 1.3rem;
+  margin-block: 2rem;
+  display: none;
+}
+
+.socmeds-m{
+  gap: 1.3rem;
+  & svg{
+    width: 50px;
+    height: 50px;
+  }
+}
+
+.legalshits-m{
+  gap: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+
+
 
 /* END: Footer Styles */
 
@@ -1353,6 +1735,26 @@ margin-block:clamp(1.5rem, 3vw, 3.5rem);
   .reco-container{
     max-width: 95%;
   }
+
+  .searchbarlast, .keywords-cont{
+    width: 100%;
+  }
+
+  .side-search-bar{
+    display: none;
+  }
+
+  .side-menu .searchbarlast{
+    display: flex;
+  }
+
+  .side-menu.active {
+    width: 100%;
+  }
+
+
+
+  
 }
 
 @media (max-width: 1279px) {
@@ -1439,6 +1841,75 @@ margin-block:clamp(1.5rem, 3vw, 3.5rem);
   }
   .e-card {
     min-width: 200px;
+  }
+
+
+  #story h3{
+    font-size: clamp(1.3rem, 4vw, 2.5rem);
+    white-space: initial;
+  }
+
+  #story .underlined-btn .dynamic-un{
+    font-size: clamp(1rem, 2.8vw, 1.8rem);
+    font-weight: 600;
+  }
+
+  
+  .laptop-story{
+    display: none;
+  }
+
+  .mobile-story{
+    display: flex;
+    align-items: center;
+  }
+
+  #notice .container{
+    padding-inline: 1.4rem;
+  }
+
+  .notice-cont li, .copyrights p, .language-selection, .tagline, .legalshits-m a, .samsungcorp{
+    font-size: clamp(15px, 2.9vw, 1.8rem);
+  }
+
+  .border-nav{
+    display: none;
+  }
+
+  .footerdd-nav{
+    display: flex;
+  }
+
+  .copyrights{
+    border: none;
+
+    & p{
+      margin-inline: 1.5rem;
+      margin-bottom: 1rem;
+      margin-top: 2.5rem;
+    }
+  }
+
+  .language-selection{
+    padding-right: 0;
+    margin-inline: 1.5rem;
+    border: none;
+  }
+  
+  .legalshits{
+    display: none;
+  }
+
+  .socmeds{
+    display: none;
+  }
+
+  .mobver{
+    display: flex;
+  }
+
+  .side-menu, .menu-overlay{
+    display: block;
   }
 }
 

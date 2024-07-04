@@ -1,5 +1,5 @@
 // Wait for the DOM to be fully loaded before executing the script
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function (event) {
   // General Variables
   // -----Overlay effect for dropdown menu-----
   const dropdownMenus = document.querySelectorAll(".dropdown-menu");
@@ -41,40 +41,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // FEATURE: HAMBURGER MENU
 
-  const hamMenu = document.querySelector(".ham-menu");
-  const sideMenu = document.querySelector(".side-menu");
-  const menuOverlay = document.querySelector(".menu-overlay");
-  const sdCloseBtn = document.querySelector(".side-close-btn");
+ // FEATURE: HAMBURGER MENU
 
-  hamMenu.addEventListener("click", () => {
-    sideMenu.classList.add("active");
-    menuOverlay.classList.add("active");
-    this.body.style.overflowY = "hidden";
+const hamMenu = document.querySelector(".ham-menu");
+const sideMenu = document.querySelector(".side-menu");
+const menuOverlay = document.querySelector(".menu-overlay");
+const sdCloseBtn = document.querySelector(".side-close-btn");
+
+hamMenu.addEventListener("click", () => {
+  sideMenu.classList.add("active");
+  menuOverlay.classList.add("active");
+
+  if (window.innerWidth <= 799) {
+    document.body.style.overflowY = "hidden";
+  } else {
+    document.body.style.overflowY = "auto";
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth >= 799) {
+    sdCloseBtn.click();
+  } else if (sideMenu.classList.contains("active")) {
+    document.body.style.overflowY = "hidden";
+  }
+});
+
+sdCloseBtn.addEventListener("click", () => {
+  sideMenu.classList.remove("active");
+  menuOverlay.classList.remove("active");
+  document.body.style.overflowY = "auto";
+});
+
+const sidedownMenus = document.querySelectorAll(".sidedown-menu");
+const shiftingMenu = document.querySelector(".shifting");
+const backBtn = document.querySelector(".back-btn");
+
+sidedownMenus.forEach((sidedownMenu) => {
+  sidedownMenu.addEventListener("click", () => {
+    sidedownMenu.classList.add("active");
+    backBtn.classList.add("active");
+    shiftingMenu.style.overflowY = "hidden";
   });
-  sdCloseBtn.addEventListener("click", () => {
-    sideMenu.classList.remove("active");
-    menuOverlay.classList.remove("active");
-    this.body.style.overflowY = "auto";
-  });
+});
 
-  const sidedownMenus = document.querySelectorAll(".sidedown-menu");
-  const shiftingMenu = document.querySelector(".shifting");
-  const backBtn = document.querySelector(".back-btn");
-
+backBtn.addEventListener("click", () => {
   sidedownMenus.forEach((sidedownMenu) => {
-    sidedownMenu.addEventListener("click", () => {
-      sidedownMenu.classList.add("active");
-      backBtn.classList.add("active");
-      shiftingMenu.style.overflowY = "hidden";
-    });
+    sidedownMenu.classList.remove("active");
+    backBtn.classList.remove("active");
+    shiftingMenu.style.overflowY = "auto";
   });
-  backBtn.addEventListener("click", () => {
-    sidedownMenus.forEach((sidedownMenu) => {
-      sidedownMenu.classList.remove("active");
-      backBtn.classList.remove("active");
-      shiftingMenu.style.overflowY = "scroll";
-    });
-  });
+});
+
 
   // Dropside dapat kase
   const sdMenus = document.querySelectorAll(".sd-menu");
@@ -314,6 +332,36 @@ document.addEventListener("DOMContentLoaded", function () {
   const slider1 = new Slider('.slide-container', '.slide-item', '#r-prev', '#r-next');
   // Add more sliders as needed
   const slider2 = new Slider('.ecards', '.e-card', '#eprev', '#enext');
+
+  const slidesStory = document.querySelectorAll('.sty-slide');
+  const dotsStory = document.querySelectorAll('.sdot');
+  let currentSlide = 0;
+
+  function updateActiveSlide(index) {
+    slidesStory.forEach((slide, i) => {
+      slide.style.transform = `translateX(-${index * 100}%)`;
+      dots[i].classList.toggle('active', i === index);
+    });
+  }
+
+  dotsStory.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      // Remove active class from all dots
+      dotsStory.forEach(d => d.classList.remove('active'));
+      
+      // Add active class to the clicked dot
+      dot.classList.add('active');
+      
+      currentSlide = index;
+      updateActiveSlide(currentSlide);
+    });
+  });
+
+  // Initialize the first slide
+  updateActiveSlide(currentSlide);
+  
+
+
   
   
   
@@ -337,7 +385,92 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll('.color-option span').forEach(span => span.classList.remove('active'));
         document.querySelector(`.color-option span[data-color="${color}"]`).classList.add('active');
     });
+  });
+  
+  // story
+
+  const stitles = document.querySelectorAll('.stitle');
+  const images = document.querySelectorAll('.si-img');
+  let currentActive = document.querySelector('.stitle.active');
+  let currentActiveIndex = Array.from(stitles).indexOf(currentActive);
+
+  stitles.forEach((stitle, index) => {
+      stitle.addEventListener('mouseenter', () => {
+          if (currentActive !== stitle) {
+              if (currentActive) {
+                  currentActive.classList.remove('active');
+                  toggleImageClass(currentActiveIndex, false);
+              }
+              stitle.classList.add('active');
+              toggleImageClass(index, true);
+              currentActive = stitle;
+              currentActiveIndex = index;
+          }
+      });
+  });
+
+  function toggleImageClass(index, add) {
+      if (add) {
+          images[index].classList.add('active');
+      } else {
+          images[index].classList.remove('active');
+      }
+  }
+
+  // Searchbarlast
+
+  const searchyInput = document.querySelector('.searchy-input');
+  const searchyCloseButton = document.querySelector('.searchy-closebtn');
+  const searchyButton = document.querySelector(".searchy-btn")
+
+  searchyInput.addEventListener('input', () => {
+      if (searchyInput.value.length > 0) {
+        searchyCloseButton.classList.remove('hide');
+      } else {
+        searchyCloseButton.classList.add('hide');
+      }
+  });
+
+  searchyCloseButton.addEventListener('click', () => {
+    searchyInput.value = '';
+      searchyCloseButton.classList.add('hide');
+  });
+
+  const redirectToSearchPage = () => {
+    const query = searchyInput.value.trim();
+    if (query.length > 0) {
+        window.location.href = `#`;
+    }
+};
+
+searchyButton.addEventListener('click', redirectToSearchPage);
+
+searchyInput.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        redirectToSearchPage();
+    }
 });
+
+  // Footer dropdown
+
+  const navDds = document.querySelectorAll(".navdd");
+
+navDds.forEach(navdd => {
+    navdd.addEventListener("click", () => {
+        if (navdd.classList.contains("active")) {
+            // If the clicked element is already active, remove the active class
+            navdd.classList.remove("active");
+        } else {
+            // Remove 'active' class from all navdd elements
+            navDds.forEach(navdd => navdd.classList.remove("active"));
+            
+            // Add 'active' class to the clicked navdd element
+            navdd.classList.add("active");
+        }
+    });
+});
+
+  
 
   
 
