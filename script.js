@@ -41,58 +41,57 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   // FEATURE: HAMBURGER MENU
 
- // FEATURE: HAMBURGER MENU
+  // FEATURE: HAMBURGER MENU
 
-const hamMenu = document.querySelector(".ham-menu");
-const sideMenu = document.querySelector(".side-menu");
-const menuOverlay = document.querySelector(".menu-overlay");
-const sdCloseBtn = document.querySelector(".side-close-btn");
+  const hamMenu = document.querySelector(".ham-menu");
+  const sideMenu = document.querySelector(".side-menu");
+  const menuOverlay = document.querySelector(".menu-overlay");
+  const sdCloseBtn = document.querySelector(".side-close-btn");
 
-hamMenu.addEventListener("click", () => {
-  sideMenu.classList.add("active");
-  menuOverlay.classList.add("active");
+  hamMenu.addEventListener("click", () => {
+    sideMenu.classList.add("active");
+    menuOverlay.classList.add("active");
 
-  if (window.innerWidth <= 799) {
-    document.body.style.overflowY = "hidden";
-  } else {
+    if (window.innerWidth <= 799) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth >= 799) {
+      sdCloseBtn.click();
+    } else if (sideMenu.classList.contains("active")) {
+      document.body.style.overflowY = "hidden";
+    }
+  });
+
+  sdCloseBtn.addEventListener("click", () => {
+    sideMenu.classList.remove("active");
+    menuOverlay.classList.remove("active");
     document.body.style.overflowY = "auto";
-  }
-});
-
-window.addEventListener("resize", () => {
-  if (window.innerWidth >= 799) {
-    sdCloseBtn.click();
-  } else if (sideMenu.classList.contains("active")) {
-    document.body.style.overflowY = "hidden";
-  }
-});
-
-sdCloseBtn.addEventListener("click", () => {
-  sideMenu.classList.remove("active");
-  menuOverlay.classList.remove("active");
-  document.body.style.overflowY = "auto";
-});
-
-const sidedownMenus = document.querySelectorAll(".sidedown-menu");
-const shiftingMenu = document.querySelector(".shifting");
-const backBtn = document.querySelector(".back-btn");
-
-sidedownMenus.forEach((sidedownMenu) => {
-  sidedownMenu.addEventListener("click", () => {
-    sidedownMenu.classList.add("active");
-    backBtn.classList.add("active");
-    shiftingMenu.style.overflowY = "hidden";
   });
-});
 
-backBtn.addEventListener("click", () => {
+  const sidedownMenus = document.querySelectorAll(".sidedown-menu");
+  const shiftingMenu = document.querySelector(".shifting");
+  const backBtn = document.querySelector(".back-btn");
+
   sidedownMenus.forEach((sidedownMenu) => {
-    sidedownMenu.classList.remove("active");
-    backBtn.classList.remove("active");
-    shiftingMenu.style.overflowY = "auto";
+    sidedownMenu.addEventListener("click", () => {
+      sidedownMenu.classList.add("active");
+      backBtn.classList.add("active");
+      shiftingMenu.style.overflowY = "hidden";
+    });
   });
-});
 
+  backBtn.addEventListener("click", () => {
+    sidedownMenus.forEach((sidedownMenu) => {
+      sidedownMenu.classList.remove("active");
+      backBtn.classList.remove("active");
+      shiftingMenu.style.overflowY = "auto";
+    });
+  });
 
   // Dropside dapat kase
   const sdMenus = document.querySelectorAll(".sd-menu");
@@ -114,6 +113,7 @@ backBtn.addEventListener("click", () => {
     });
   });
 
+  // HERO SLIDER
 
   let slider = document.querySelector(".slider .slides");
   let heroSlideItems = document.querySelectorAll(".slider .slides .slide");
@@ -156,11 +156,25 @@ backBtn.addEventListener("click", () => {
   }
 
   dots.forEach((li, key) => {
-    li.addEventListener("click", () => {
-      active = key;
-      reloadSlider();
-    });
+  li.addEventListener("mouseenter", () => {
+    // Stop the slider when mouse enters the dot
+    stopSlider();
   });
+
+  li.addEventListener("mouseleave", () => {
+    // Start the slider again when mouse leaves the dot
+    startSlider();
+  });
+
+  li.addEventListener("click", () => {
+    active = key;
+    reloadSlider();
+
+    // Stop the slider when a dot is clicked
+    stopSlider();
+  });
+});
+
 
   window.onresize = function (event) {
     reloadSlider();
@@ -222,75 +236,54 @@ backBtn.addEventListener("click", () => {
   setupTabSwitching("tvsounds");
   setupTabSwitching("home-app");
 
-  // // Samsung exclusive slider
-  // const ecContainer = document.querySelector(".ecards");
-  // const eprev = document.querySelector(".eprev");
-  // const enext = document.querySelector(".enext");
-  // const eScrollAmount = 400;
-
-  
-
-  // // Initial check to set the button visibility on page load
-  // updateButtonVisibility();
-
-  // eprev.addEventListener("click", () => {
-  //   ecContainer.scrollBy({
-  //     top: 0,
-  //     left: -eScrollAmount,
-  //     behavior: "smooth",
-  //   });
-  //   setTimeout(updateButtonVisibility, 300);
-  // });
-
-  // enext.addEventListener("click", () => {
-  //   ecContainer.scrollBy({
-  //     top: 0,
-  //     left: eScrollAmount,
-  //     behavior: "smooth",
-  //   });
-  //   setTimeout(updateButtonVisibility, 300);
-  // });
-
-  // ecContainer.addEventListener("scroll", updateButtonVisibility);
+ 
   class Slider {
-    constructor(containerSelector, itemSelector, prevButtonSelector, nextButtonSelector) {
+    constructor(
+      containerSelector,
+      itemSelector,
+      prevButtonSelector,
+      nextButtonSelector
+    ) {
       this.slideContainer = document.querySelector(containerSelector);
       this.slideItems = document.querySelectorAll(itemSelector);
       this.rPrev = document.querySelector(prevButtonSelector);
       this.rNext = document.querySelector(nextButtonSelector);
-  
+
       this.slideItemCount = this.slideItems.length;
       this.slidesToShow;
       this.currentIndex = 0;
-  
+
       this.updateSlidesToShow();
       this.updateSlider();
       this.updateButtonVisibility();
-  
+
       this.rNext.onclick = this.moveToNextSlide.bind(this);
       this.rPrev.onclick = this.moveToPrevSlide.bind(this);
-      this.slideContainer.addEventListener("scroll", this.updateButtonVisibility.bind(this));
-  
+      this.slideContainer.addEventListener(
+        "scroll",
+        this.updateButtonVisibility.bind(this)
+      );
+
       window.onresize = () => {
         this.updateSlidesToShow();
         this.updateSlider();
       };
     }
-  
+
     updateButtonVisibility() {
       if (this.currentIndex === 0) {
         this.rPrev.style.display = "none";
       } else {
         this.rPrev.style.display = "block";
       }
-  
+
       if (this.currentIndex >= this.slideItemCount - this.slidesToShow) {
         this.rNext.style.display = "none";
       } else {
         this.rNext.style.display = "block";
       }
     }
-  
+
     updateSlidesToShow() {
       const screenWidth = window.innerWidth;
       if (screenWidth < 600) {
@@ -301,57 +294,66 @@ backBtn.addEventListener("click", () => {
         this.slidesToShow = 4;
       }
     }
-  
+
     getItemWidth() {
-      const gap = parseFloat(window.getComputedStyle(this.slideContainer).columnGap || 0);
+      const gap = parseFloat(
+        window.getComputedStyle(this.slideContainer).columnGap || 0
+      );
       return this.slideItems[0].offsetWidth + gap;
     }
-  
+
     moveToNextSlide() {
       if (this.currentIndex < this.slideItemCount - this.slidesToShow) {
         this.currentIndex += 1;
       }
       this.updateSlider();
     }
-  
+
     moveToPrevSlide() {
       if (this.currentIndex > 0) {
         this.currentIndex -= 1;
       }
       this.updateSlider();
     }
-  
+
     updateSlider() {
       const itemWidth = this.getItemWidth();
-      this.slideContainer.style.transform = `translateX(${-this.currentIndex * itemWidth}px)`;
+      this.slideContainer.style.transform = `translateX(${
+        -this.currentIndex * itemWidth
+      }px)`;
       this.updateButtonVisibility();
     }
   }
-  
-  // Usage
-  const slider1 = new Slider('.slide-container', '.slide-item', '#r-prev', '#r-next');
-  // Add more sliders as needed
-  const slider2 = new Slider('.ecards', '.e-card', '#eprev', '#enext');
 
-  const slidesStory = document.querySelectorAll('.sty-slide');
-  const dotsStory = document.querySelectorAll('.sdot');
+  // Usage
+  const slider1 = new Slider(
+    ".slide-container",
+    ".slide-item",
+    "#r-prev",
+    "#r-next"
+  );
+  // Add more sliders as needed
+  const slider2 = new Slider(".ecards", ".e-card", "#eprev", "#enext");
+
+  const slidesStory = document.querySelectorAll(".sty-slide");
+  const dotsStory = document.querySelectorAll(".sdot");
   let currentSlide = 0;
 
   function updateActiveSlide(index) {
     slidesStory.forEach((slide, i) => {
       slide.style.transform = `translateX(-${index * 100}%)`;
-      dots[i].classList.toggle('active', i === index);
+      dots[i].classList.toggle("active", i === index);
     });
   }
 
   dotsStory.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
+    dot.addEventListener("click", () => {
       // Remove active class from all dots
-      dotsStory.forEach(d => d.classList.remove('active'));
-      
+      dotsStory.forEach((d) => d.classList.remove("active"));
+
       // Add active class to the clicked dot
-      dot.classList.add('active');
-      
+      dot.classList.add("active");
+
       currentSlide = index;
       updateActiveSlide(currentSlide);
     });
@@ -359,157 +361,124 @@ backBtn.addEventListener("click", () => {
 
   // Initialize the first slide
   updateActiveSlide(currentSlide);
-  
 
-
-  
-  
-  
   // Color options
 
-  document.querySelectorAll('.product-nav button').forEach(button => {
-    button.addEventListener('click', function() {
-        // Remove active class from all buttons
-        document.querySelectorAll('.product-nav button').forEach(btn => btn.classList.remove('active'));
-        // Add active class to the clicked button
-        this.classList.add('active');
-        
-        // Hide all images
-        document.querySelectorAll('.product-img').forEach(img => img.classList.add('hide'));
-        
-        // Get the color from the clicked button and show the corresponding image
-        const color = this.getAttribute('data-color');
-        document.querySelector(`.product-img.${color}`).classList.remove('hide');
-        
-        // Update color text in the form
-        document.querySelectorAll('.color-option span').forEach(span => span.classList.remove('active'));
-        document.querySelector(`.color-option span[data-color="${color}"]`).classList.add('active');
+  document.querySelectorAll(".product-nav button").forEach((button) => {
+    button.addEventListener("click", function () {
+      // Remove active class from all buttons
+      document
+        .querySelectorAll(".product-nav button")
+        .forEach((btn) => btn.classList.remove("active"));
+      // Add active class to the clicked button
+      this.classList.add("active");
+
+      // Hide all images
+      document
+        .querySelectorAll(".product-img")
+        .forEach((img) => img.classList.add("hide"));
+
+      // Get the color from the clicked button and show the corresponding image
+      const color = this.getAttribute("data-color");
+      document.querySelector(`.product-img.${color}`).classList.remove("hide");
+
+      // Update color text in the form
+      document
+        .querySelectorAll(".color-option span")
+        .forEach((span) => span.classList.remove("active"));
+      document
+        .querySelector(`.color-option span[data-color="${color}"]`)
+        .classList.add("active");
     });
   });
-  
+
   // story
 
-  const stitles = document.querySelectorAll('.stitle');
-  const images = document.querySelectorAll('.si-img');
-  let currentActive = document.querySelector('.stitle.active');
+  const stitles = document.querySelectorAll(".stitle");
+  const images = document.querySelectorAll(".si-img");
+  let currentActive = document.querySelector(".stitle.active");
   let currentActiveIndex = Array.from(stitles).indexOf(currentActive);
 
   stitles.forEach((stitle, index) => {
-      stitle.addEventListener('mouseenter', () => {
-          if (currentActive !== stitle) {
-              if (currentActive) {
-                  currentActive.classList.remove('active');
-                  toggleImageClass(currentActiveIndex, false);
-              }
-              stitle.classList.add('active');
-              toggleImageClass(index, true);
-              currentActive = stitle;
-              currentActiveIndex = index;
-          }
-      });
+    stitle.addEventListener("mouseenter", () => {
+      if (currentActive !== stitle) {
+        if (currentActive) {
+          currentActive.classList.remove("active");
+          toggleImageClass(currentActiveIndex, false);
+        }
+        stitle.classList.add("active");
+        toggleImageClass(index, true);
+        currentActive = stitle;
+        currentActiveIndex = index;
+      }
+    });
   });
 
   function toggleImageClass(index, add) {
-      if (add) {
-          images[index].classList.add('active');
-      } else {
-          images[index].classList.remove('active');
-      }
+    if (add) {
+      images[index].classList.add("active");
+    } else {
+      images[index].classList.remove("active");
+    }
   }
 
   // Searchbarlast
 
-  const searchyInput = document.querySelector('.searchy-input');
-  const searchyCloseButton = document.querySelector('.searchy-closebtn');
-  const searchyButton = document.querySelector(".searchy-btn")
+  // Select all elements with class name .searchbarlast
+const searchBars = document.querySelectorAll(".searchbarlast");
 
-  searchyInput.addEventListener('input', () => {
-      if (searchyInput.value.length > 0) {
-        searchyCloseButton.classList.remove('hide');
-      } else {
-        searchyCloseButton.classList.add('hide');
-      }
+searchBars.forEach(searchBar => {
+  const searchyInput = searchBar.querySelector(".searchy-input");
+  const searchyCloseButton = searchBar.querySelector(".searchy-closebtn");
+  const searchyButton = searchBar.querySelector(".searchy-btn");
+
+  searchyInput.addEventListener("input", () => {
+    if (searchyInput.value.length > 0) {
+      searchyCloseButton.classList.remove("hide");
+    } else {
+      searchyCloseButton.classList.add("hide");
+    }
   });
 
-  searchyCloseButton.addEventListener('click', () => {
-    searchyInput.value = '';
-      searchyCloseButton.classList.add('hide');
+  searchyCloseButton.addEventListener("click", () => {
+    searchyInput.value = "";
+    searchyCloseButton.classList.add("hide");
   });
 
   const redirectToSearchPage = () => {
     const query = searchyInput.value.trim();
     if (query.length > 0) {
-        window.location.href = `#`;
+      // Replace `#` with your actual search page URL or logic
+      window.location.href = `#`;
     }
-};
+  };
 
-searchyButton.addEventListener('click', redirectToSearchPage);
+  searchyButton.addEventListener("click", redirectToSearchPage);
 
-searchyInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter') {
-        redirectToSearchPage();
+  searchyInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      redirectToSearchPage();
     }
+  });
 });
+
 
   // Footer dropdown
 
   const navDds = document.querySelectorAll(".navdd");
 
-navDds.forEach(navdd => {
+  navDds.forEach((navdd) => {
     navdd.addEventListener("click", () => {
-        if (navdd.classList.contains("active")) {
-            // If the clicked element is already active, remove the active class
-            navdd.classList.remove("active");
-        } else {
-            // Remove 'active' class from all navdd elements
-            navDds.forEach(navdd => navdd.classList.remove("active"));
-            
-            // Add 'active' class to the clicked navdd element
-            navdd.classList.add("active");
-        }
+      if (navdd.classList.contains("active")) {
+        // If the clicked element is already active, remove the active class
+        navdd.classList.remove("active");
+      } else {
+        // Remove 'active' class from all navdd elements
+        navDds.forEach((navdd) => navdd.classList.remove("active"));
+
+        // Add 'active' class to the clicked navdd element
+        navdd.classList.add("active");
+      }
     });
+  });
 });
-
-  
-
-  
-
-});
-
-// $(document).ready(() => {
-//   $('.reco-products').slick({
-//     dots: true,
-//     infinite: false,
-//     speed: 300,
-//     slidesToShow: 2,
-//     slidesToScroll: 4,
-//     responsive: [
-//       {
-//         breakpoint: 1024,
-//         settings: {
-//           slidesToShow: 3,
-//           slidesToScroll: 3,
-//           infinite: true,
-//           dots: true
-//         }
-//       },
-//       {
-//         breakpoint: 600,
-//         settings: {
-//           slidesToShow: 2,
-//           slidesToScroll: 2
-//         }
-//       },
-//       {
-//         breakpoint: 480,
-//         settings: {
-//           slidesToShow: 1,
-//           slidesToScroll: 1
-//         }
-//       }
-//       // You can unslick at a given breakpoint now by adding:
-//       // settings: "unslick"
-//       // instead of a settings object
-//     ]
-//   });
-// })
